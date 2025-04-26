@@ -1,0 +1,60 @@
+# version: '3.8'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD:          # Contraseña vacía para root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" # Permite acceso sin contraseña
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../entorno/mysql-data:/var/lib/mysql
+    networks:
+      - db-network
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      ALLOW_NO_PASSWORD: "true"
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - db-network
+
+
+  java-app:
+    image: maven:3.8.6-eclipse-temurin-17
+    container_name: java-app
+    volumes:
+      - ../app:/usr/src/app      
+      - ../entorno/maven-repo:/root/.m2  # Cachear dependencias
+    working_dir: /usr/src/app
+    ports:
+      - "8081:8080"  # Ajusta según el puerto de tu aplicación
+    command: mvn clean compile exec:java 
+    # command: mvn clean package compile exec:java -Dexec.mainClass="com.tp1.App" -Dexec.args="arg1 arg2"
+    # command: mvn clean install
+    depends_on:
+        - mysql
+    networks:
+      - db-network
+
+volumes:
+  mysql-data:
+  maven-repo:
+
+networks:
+  db-network:
+    driver: bridge

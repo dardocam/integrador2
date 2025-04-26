@@ -1,0 +1,13 @@
+/usr/src/app/src/main/java/com/app/repository/interfaces/InscripcionRepositoryInterface.java
+/usr/src/app/src/main/java/com/app/dto/CarreraDTO.java
+/usr/src/app/src/main/java/com/app/dto/EstudianteDTO.java
+/usr/src/app/src/main/java/com/app/model/Carrera.java
+/usr/src/app/src/main/java/com/app/repository/EstudianteRepository.java
+/usr/src/app/src/main/java/com/app/factory/JPAUtil.java
+/usr/src/app/src/main/java/com/app/model/Estudiante.java
+/usr/src/app/src/main/java/com/app/repository/interfaces/CarreraRepositoryInterface.java
+/usr/src/app/src/main/java/com/app/model/Inscripcion.java
+/usr/src/app/src/main/java/com/app/repository/InscripcionRepository.java
+/usr/src/app/src/main/java/com/app/repository/CarreraRepository.java
+/usr/src/app/src/main/java/com/app/Main.java
+/usr/src/app/src/main/java/com/app/repository/interfaces/EstudianteRepositoryInterface.java
