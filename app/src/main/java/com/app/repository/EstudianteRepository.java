@@ -43,13 +43,12 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
       } else {
         em.persist(estudiante);
         System.out.println(
-          "Estudiante guardado exitosamente: " +
-          ((Estudiante) estudiante).getNombre()
+          "Estudiante almacenado: " + ((Estudiante) estudiante).getNombre()
         );
       }
       em.getTransaction().commit();
     } catch (Exception e) {
-      System.out.println("Error al guardar el estudiante: " + e.getMessage());
+      System.out.println("Error almacenando el estudiante: " + e.getMessage());
       if (em.getTransaction().isActive()) {
         em.getTransaction().rollback();
       }
@@ -114,8 +113,12 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
     try {
       em.getTransaction().begin();
       List<Estudiante> estudiantes = em
-        .createQuery("SELECT e FROM Estudiante e", Estudiante.class)
+        .createQuery(
+          "SELECT e FROM Estudiante e ORDER BY e.nombre ASC",
+          Estudiante.class
+        )
         .getResultList();
+      System.out.println("LISTA DE ESTUDIANTES");
       for (Estudiante estudiante : estudiantes) {
         EstudianteDTO estudianteDTO = new EstudianteDTO(estudiante.getNombre());
         System.out.println(estudianteDTO);
@@ -150,7 +153,9 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
         i.setAntiguedad(aniosAntiguedad);
         em.persist(i);
         // Aquí puedes agregar la lógica para matricular al estudiante en el curso
-        System.out.println("Estudiante matriculado: " + i.toString());
+        EstudianteDTO estudianteDTO = new EstudianteDTO(estudiante.getNombre());
+
+        System.out.println("Estudiante matriculado: " + estudianteDTO);
       } else {
         System.out.println("Estudiante no encontrado.");
       }

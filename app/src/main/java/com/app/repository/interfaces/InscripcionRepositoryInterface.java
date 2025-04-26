@@ -7,4 +7,6 @@ public interface InscripcionRepositoryInterface {
   //   void eliminarEstudiantePorId(int id);
 
   //   void findAll();
+
+  void matricularEstudiante(int idEstudiante, int idCarrera);
 }

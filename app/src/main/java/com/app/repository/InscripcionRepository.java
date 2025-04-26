@@ -8,6 +8,8 @@ import com.app.repository.interfaces.InscripcionRepositoryInterface;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
 import java.io.FileReader;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class InscripcionRepository implements InscripcionRepositoryInterface {
 
@@ -51,6 +53,42 @@ public class InscripcionRepository implements InscripcionRepositoryInterface {
       em.getTransaction().commit();
     } catch (Exception e) {
       System.out.println("Error al insertar desde CSV: " + e.getMessage());
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
+    }
+  }
+
+  @Override
+  public void matricularEstudiante(int idEstudiante, int idCarrera) {
+    try {
+      Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
+      Carrera carrera = em.find(Carrera.class, idCarrera);
+      if (estudiante == null || carrera == null) {
+        System.out.println("Estudiante o carrera no encontrados");
+        return;
+      }
+      Inscripcion inscripcion = new Inscripcion();
+      inscripcion.setEstudiante(estudiante);
+      inscripcion.setCarrera(carrera);
+      LocalDate date = new Date()
+        .toInstant()
+        .atZone(java.time.ZoneId.systemDefault())
+        .toLocalDate();
+      int year = date.getYear();
+      inscripcion.setInscripcion(year);
+      em.getTransaction().begin();
+      em.persist(inscripcion);
+      em.getTransaction().commit();
+      System.out.println(
+        "Estudiante matriculado: " +
+        estudiante.getNombre() +
+        " " +
+        "Carrera: " +
+        carrera.getNombre()
+      );
+    } catch (Exception e) {
+      System.out.println("Error al matricular estudiante: " + e.getMessage());
       if (em.getTransaction().isActive()) {
         em.getTransaction().rollback();
       }
