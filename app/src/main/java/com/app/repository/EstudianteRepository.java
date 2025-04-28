@@ -9,6 +9,7 @@ import com.app.repository.interfaces.EstudianteRepositoryInterface;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstudianteRepository implements EstudianteRepositoryInterface {
@@ -107,9 +108,10 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
     }
   }
 
-  // Método para encontrar todas las carreras
+  // Método para encontrar todos los estudiantes
   @Override
-  public void findAll() {
+  public ArrayList<EstudianteDTO> findAll() {
+    ArrayList<EstudianteDTO> resultado = new ArrayList<>();
     try {
       em.getTransaction().begin();
       List<Estudiante> estudiantes = em
@@ -118,10 +120,8 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
           Estudiante.class
         )
         .getResultList();
-      System.out.println("LISTA DE ESTUDIANTES");
       for (Estudiante estudiante : estudiantes) {
-        EstudianteDTO estudianteDTO = new EstudianteDTO(estudiante.getNombre());
-        System.out.println(estudianteDTO);
+        resultado.add(new EstudianteDTO(estudiante));
       }
       em.getTransaction().commit();
     } catch (Exception e) {
@@ -132,8 +132,10 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
         em.getTransaction().rollback();
       }
     }
+    return resultado;
   }
 
+  // b) Matricular un estudiante en una carrera
   public void matricularEstudiante(
     Estudiante estudiante,
     Carrera carrera,
@@ -153,7 +155,7 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
         i.setAntiguedad(aniosAntiguedad);
         em.persist(i);
         // Aquí puedes agregar la lógica para matricular al estudiante en el curso
-        EstudianteDTO estudianteDTO = new EstudianteDTO(estudiante.getNombre());
+        EstudianteDTO estudianteDTO = new EstudianteDTO(estudiante);
 
         System.out.println("Estudiante matriculado: " + estudianteDTO);
       } else {
@@ -168,5 +170,54 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
         em.getTransaction().rollback();
       }
     }
+  }
+
+  @Override
+  // recuperar un estudiante, en base a su número de libreta universitaria.
+  public EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta) {
+    Estudiante estudiante = null;
+    try {
+      String jpql = "SELECT e from Estudiante e WHERE e.libreta = :libreta";
+      estudiante =
+        em
+          .createQuery(jpql, Estudiante.class)
+          .setParameter("libreta", numeroLibreta)
+          .getSingleResult();
+    } catch (Exception e) {
+      System.out.println("Error al recuperar un estudiante: " + e.getMessage());
+    }
+    if (estudiante == null) {
+      return new EstudianteDTO(null);
+    }
+    EstudianteDTO vista = new EstudianteDTO(estudiante);
+    return vista;
+  }
+
+  @Override
+  // recuperar todos los estudiantes, en base a su género.
+  public List<EstudianteDTO> findAllByGender(String genero) {
+    List<EstudianteDTO> resultado = new ArrayList<>();
+    try {
+      List<Estudiante> listaEstudiantes;
+      String jpql =
+        "SELECT e " +
+        "FROM Estudiante e " +
+        "WHERE e.genero = :gen " +
+        "ORDER BY e.nombre";
+      listaEstudiantes =
+        em
+          .createQuery(jpql, Estudiante.class)
+          .setParameter("gen", genero)
+          .getResultList();
+
+      if (listaEstudiantes != null) {
+        for (Estudiante estudiante : listaEstudiantes) {
+          resultado.add(new EstudianteDTO(estudiante));
+        }
+      }
+    } catch (Exception e) {
+      System.out.println("Error al recuperar un estudiante: " + e.getMessage());
+    }
+    return resultado;
   }
 }

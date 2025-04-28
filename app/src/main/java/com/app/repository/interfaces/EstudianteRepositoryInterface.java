@@ -1,5 +1,9 @@
 package com.app.repository.interfaces;
 
+import com.app.dto.EstudianteDTO;
+import java.util.ArrayList;
+import java.util.List;
+
 public interface EstudianteRepositoryInterface {
   void save(Object estudiante);
 
@@ -7,5 +11,8 @@ public interface EstudianteRepositoryInterface {
 
   void eliminarEstudiantePorId(int id);
 
-  void findAll();
+  ArrayList<EstudianteDTO> findAll();
+  List<EstudianteDTO> findAllByGender(String genero);
+
+  EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta);
 }

@@ -1,11 +1,13 @@
 package com.app.dto;
 
+import com.app.model.Carrera;
+
 public class CarreraDTO {
 
   private final String nombre;
 
-  public CarreraDTO(String nombre) {
-    this.nombre = nombre;
+  public CarreraDTO(Carrera c) {
+    this.nombre = c.getNombre();
   }
 
   public String getNombre() {

@@ -7,6 +7,7 @@ import com.app.repository.interfaces.CarreraRepositoryInterface;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarreraRepository implements CarreraRepositoryInterface {
@@ -89,7 +90,7 @@ public class CarreraRepository implements CarreraRepositoryInterface {
         .createQuery("SELECT c FROM Carrera c", Carrera.class)
         .getResultList();
       for (Carrera carrera : carreras) {
-        CarreraDTO carreraDTO = new CarreraDTO(carrera.getNombre());
+        CarreraDTO carreraDTO = new CarreraDTO(carrera);
         System.out.println(carreraDTO);
       }
       em.getTransaction().commit();
@@ -150,5 +151,28 @@ public class CarreraRepository implements CarreraRepositoryInterface {
     } finally {
       em.close();
     }
+  }
+
+  @Override
+  // recuperar todos los estudiantes, en base a su género.
+  public List<CarreraDTO> buscarTodasLasCarrerasConEstudiantesInscriptos() {
+    List<CarreraDTO> resultado = new ArrayList<>();
+    try {
+      em.getTransaction().begin();
+      List<Carrera> listaCarreras;
+      String jpql = "SELECT c" + "FROM Carrera c";
+      // "ORDER BY COUNT(i) DESC";
+      listaCarreras = em.createQuery(jpql, Carrera.class).getResultList();
+      em.getTransaction().commit();
+
+      if (listaCarreras != null) {
+        for (Carrera carrera : listaCarreras) {
+          resultado.add(new CarreraDTO(carrera));
+        }
+      }
+    } catch (Exception e) {
+      System.out.println("Error al recuperar un estudiante: " + e.getMessage());
+    }
+    return resultado;
   }
 }
