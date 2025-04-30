@@ -229,7 +229,10 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
 
   //recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
   @Override
-  public ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad() {
+  public ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad(
+    String nombreCarrera,
+    String ciudadResidencia
+  ) {
     ArrayList<EstudianteCarreraCiudadDTO> estudiantes = new ArrayList<>();
     try {
       String query =
@@ -244,8 +247,8 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
       em.getTransaction().begin();
       List<EstudianteCarreraCiudadDTO> resultados = em
         .createQuery(query, EstudianteCarreraCiudadDTO.class)
-        .setParameter("nombreCarrera", "TUDAI")
-        .setParameter("ciudadResidencia", "Kabul")
+        .setParameter("nombreCarrera", nombreCarrera)
+        .setParameter("ciudadResidencia", ciudadResidencia)
         .getResultList();
 
       for (EstudianteCarreraCiudadDTO resultado : resultados) {

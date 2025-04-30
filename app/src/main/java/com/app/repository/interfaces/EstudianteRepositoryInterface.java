@@ -17,5 +17,8 @@ public interface EstudianteRepositoryInterface {
 
   EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta);
 
-  ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad();
+  ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad(
+    String nombreCarrera,
+    String ciudadResidencia
+  );
 }
