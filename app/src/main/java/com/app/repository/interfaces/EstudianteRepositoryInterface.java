@@ -1,5 +1,6 @@
 package com.app.repository.interfaces;
 
+import com.app.dto.EstudianteCarreraCiudadDTO;
 import com.app.dto.EstudianteDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,4 +16,6 @@ public interface EstudianteRepositoryInterface {
   List<EstudianteDTO> findAllByGender(String genero);
 
   EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta);
+
+  ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad();
 }

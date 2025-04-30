@@ -1,4 +1,6 @@
+/usr/src/app/src/main/java/com/app/dto/CarreraConInscriptosDTO.java
 /usr/src/app/src/main/java/com/app/repository/interfaces/InscripcionRepositoryInterface.java
+/usr/src/app/src/main/java/com/app/dto/EstudianteCarreraCiudadDTO.java
 /usr/src/app/src/main/java/com/app/dto/CarreraDTO.java
 /usr/src/app/src/main/java/com/app/dto/EstudianteDTO.java
 /usr/src/app/src/main/java/com/app/model/Carrera.java

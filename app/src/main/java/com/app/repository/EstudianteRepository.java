@@ -1,5 +1,6 @@
 package com.app.repository;
 
+import com.app.dto.EstudianteCarreraCiudadDTO;
 import com.app.dto.EstudianteDTO;
 import com.app.factory.JPAUtil;
 import com.app.model.Carrera;
@@ -120,10 +121,10 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
           Estudiante.class
         )
         .getResultList();
+      em.getTransaction().commit();
       for (Estudiante estudiante : estudiantes) {
         resultado.add(new EstudianteDTO(estudiante));
       }
-      em.getTransaction().commit();
     } catch (Exception e) {
       System.out.println(
         "Error al encontrar todas las carreras: " + e.getMessage()
@@ -176,13 +177,15 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
   // recuperar un estudiante, en base a su número de libreta universitaria.
   public EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta) {
     Estudiante estudiante = null;
-    try {
+    try (em) {
       String jpql = "SELECT e from Estudiante e WHERE e.libreta = :libreta";
+      em.getTransaction().begin();
       estudiante =
         em
           .createQuery(jpql, Estudiante.class)
           .setParameter("libreta", numeroLibreta)
           .getSingleResult();
+      em.getTransaction().commit();
     } catch (Exception e) {
       System.out.println("Error al recuperar un estudiante: " + e.getMessage());
     }
@@ -217,7 +220,47 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
       }
     } catch (Exception e) {
       System.out.println("Error al recuperar un estudiante: " + e.getMessage());
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
     }
     return resultado;
+  }
+
+  //recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+  @Override
+  public ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad() {
+    ArrayList<EstudianteCarreraCiudadDTO> estudiantes = new ArrayList<>();
+    try {
+      String query =
+        "SELECT new EstudianteCarreraCiudadDTO(e,c) " +
+        "FROM Estudiante e " +
+        "JOIN e.inscripcion i " + //// Asume que la entidad Estudiante tiene una colección "inscriptos" de tipo Inscriptos
+        "JOIN i.carrera c " + //// Asume que la entidad Inscripcion tiene una referencia a Carrera
+        "WHERE " +
+        "c.nombre = :nombreCarrera " +
+        "AND e.ciudad = :ciudadResidencia";
+
+      em.getTransaction().begin();
+      List<EstudianteCarreraCiudadDTO> resultados = em
+        .createQuery(query, EstudianteCarreraCiudadDTO.class)
+        .setParameter("nombreCarrera", "TUDAI")
+        .setParameter("ciudadResidencia", "Kabul")
+        .getResultList();
+
+      for (EstudianteCarreraCiudadDTO resultado : resultados) {
+        estudiantes.add(resultado);
+      }
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      System.out.println(
+        "Error al encontrar todos los estudiantes de una determinada carrera: " +
+        e.getMessage()
+      );
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
+    }
+    return estudiantes;
   }
 }

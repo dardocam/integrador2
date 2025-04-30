@@ -1,11 +1,12 @@
 package com.app;
 
-import com.app.dto.CarreraDTO;
+import com.app.dto.EstudianteCarreraCiudadDTO;
 import com.app.dto.EstudianteDTO;
 import com.app.model.Estudiante;
 import com.app.repository.CarreraRepository;
 import com.app.repository.EstudianteRepository;
 import com.app.repository.InscripcionRepository;
+import java.util.ArrayList;
 
 // import com.app.model.Carrera;
 // import com.app.repository.EstudianteRepository;
@@ -56,25 +57,31 @@ public class Main {
     // d) recuperar un estudiante, en base a su número de libreta universitaria.
     System.out.println("ESTUDIANTE POR LIBRETA");
 
-    EstudianteDTO recuperado = estudianteRepository.buscarPorLibretaUnivertitaria(
-      LU
-    );
-    System.out.println("Estudiante recuperado por su libreta: " + recuperado);
+    // EstudianteDTO recuperado = estudianteRepository.buscarPorLibretaUnivertitaria(
+    //   LU
+    // );
+    // System.out.println("Estudiante recuperado por su libreta: " + recuperado);
     // e) recuperar todos los estudiantes, en base a su género.
 
     System.out.println("LISTA DE ESTUDIANTES POR GENERO");
 
-    for (EstudianteDTO dto : estudianteRepository.findAllByGender(
-      "Masculino"
-    )) {
-      System.out.println(dto);
-    }
+    // for (EstudianteDTO dto : estudianteRepository.findAllByGender(
+    //   "Masculino"
+    // )) {
+    //   System.out.println(dto);
+    // }
     // f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
     System.out.println("LISTA DE CARRERAS CON INSCRIPTOS");
 
-    for (CarreraDTO inscriptos : carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos()) {
-      System.out.println(inscriptos);
-    }
+    // ArrayList<CarreraConInscriptosDTO> listaCarreras = carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos();
+    // System.out.println(listaCarreras);
+    // for (CarreraDTO inscriptos : carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos()) {
+    //   System.out.println(inscriptos);
+    // }
     // g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+
+    ArrayList<EstudianteCarreraCiudadDTO> listaEstudiantes = estudianteRepository.buscarEstudianteCarreraCiudad();
+    System.out.println("LISTA DE ESTUDIANTES POR CARRERA Y CIUDAD");
+    System.out.println(listaEstudiantes);
   }
 }

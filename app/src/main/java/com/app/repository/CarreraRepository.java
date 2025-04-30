@@ -1,5 +1,6 @@
 package com.app.repository;
 
+import com.app.dto.CarreraConInscriptosDTO;
 import com.app.dto.CarreraDTO;
 import com.app.factory.JPAUtil;
 import com.app.model.Carrera;
@@ -83,25 +84,23 @@ public class CarreraRepository implements CarreraRepositoryInterface {
 
   // Método para encontrar todas las carreras
   @Override
-  public void findAll() {
+  public ArrayList<CarreraDTO> findAll() {
+    ArrayList<CarreraDTO> resultado = new ArrayList<>();
     try {
-      em.getTransaction().begin();
       List<Carrera> carreras = em
         .createQuery("SELECT c FROM Carrera c", Carrera.class)
         .getResultList();
+
       for (Carrera carrera : carreras) {
-        CarreraDTO carreraDTO = new CarreraDTO(carrera);
-        System.out.println(carreraDTO);
+        System.out.println(carrera);
+        resultado.add(new CarreraDTO(carrera));
       }
-      em.getTransaction().commit();
     } catch (Exception e) {
-      System.out.println(
-        "Error al encontrar todas las carreras: " + e.getMessage()
-      );
       if (em.getTransaction().isActive()) {
         em.getTransaction().rollback();
       }
     }
+    return resultado;
   }
 
   @Override
@@ -148,31 +147,38 @@ public class CarreraRepository implements CarreraRepositoryInterface {
       em.getTransaction().commit();
     } catch (Exception e) {
       System.out.println("Error al insertar desde CSV: " + e.getMessage());
-    } finally {
-      em.close();
     }
   }
 
+  // Método para encontrar todas las carreras con estudiantes inscriptos
   @Override
-  // recuperar todos los estudiantes, en base a su género.
-  public List<CarreraDTO> buscarTodasLasCarrerasConEstudiantesInscriptos() {
-    List<CarreraDTO> resultado = new ArrayList<>();
+  public ArrayList<CarreraConInscriptosDTO> buscarTodasLasCarrerasConEstudiantesInscriptos() {
+    ArrayList<CarreraConInscriptosDTO> carrerasConEstudiantes = new ArrayList<>();
     try {
-      em.getTransaction().begin();
-      List<Carrera> listaCarreras;
-      String jpql = "SELECT c" + "FROM Carrera c";
-      // "ORDER BY COUNT(i) DESC";
-      listaCarreras = em.createQuery(jpql, Carrera.class).getResultList();
-      em.getTransaction().commit();
+      String query =
+        "SELECT new CarreraConInscriptosDTO(c.nombre, COUNT(i)) " +
+        "FROM Carrera c " +
+        "JOIN c.inscripcion i " +
+        "GROUP BY c.id_carrera, c.nombre " +
+        "ORDER BY COUNT(i) DESC";
 
-      if (listaCarreras != null) {
-        for (Carrera carrera : listaCarreras) {
-          resultado.add(new CarreraDTO(carrera));
-        }
+      em.getTransaction().begin();
+      List<CarreraConInscriptosDTO> resultados = em
+        .createQuery(query, CarreraConInscriptosDTO.class)
+        .getResultList();
+
+      for (CarreraConInscriptosDTO resultado : resultados) {
+        carrerasConEstudiantes.add(resultado);
       }
+      em.getTransaction().commit();
     } catch (Exception e) {
-      System.out.println("Error al recuperar un estudiante: " + e.getMessage());
+      System.out.println(
+        "Error al encontrar todas las carreras: " + e.getMessage()
+      );
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
     }
-    return resultado;
+    return carrerasConEstudiantes;
   }
 }

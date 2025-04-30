@@ -3,11 +3,13 @@ com/app/repository/CarreraRepository.class
 com/app/repository/InscripcionRepository.class
 com/app/Main.class
 com/app/repository/EstudianteRepository.class
+com/app/dto/CarreraConInscriptosDTO.class
 com/app/dto/CarreraDTO.class
 com/app/model/Estudiante.class
 com/app/dto/EstudianteDTO.class
 com/app/model/Inscripcion.class
 com/app/repository/interfaces/InscripcionRepositoryInterface.class
 com/app/factory/JPAUtil.class
+com/app/dto/EstudianteCarreraCiudadDTO.class
 com/app/repository/interfaces/EstudianteRepositoryInterface.class
 com/app/model/Carrera.class
