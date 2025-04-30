@@ -9,16 +9,12 @@ import com.app.repository.EstudianteRepository;
 import com.app.repository.InscripcionRepository;
 import java.util.ArrayList;
 
-// import com.app.model.Carrera;
-// import com.app.repository.EstudianteRepository;
-//import com.app.utils.HelperMySql;
-
 public class Main {
 
   public static void main(String[] args) {
-    // INICIO
+    // INICIO DE LA APLICACION
     System.out.println("Iniciando la aplicacion");
-    // POBLANDO LA DB
+    // POBLANDO LA BASE DE DATOS tp2-integrador
     System.out.println("Poblando la base de datos");
     CarreraRepository carreraRepository = new CarreraRepository();
     carreraRepository.insertarCarreraDeCSV(
@@ -33,7 +29,7 @@ public class Main {
       "src/main/resources/populateDB/estudianteCarrera.csv"
     );
     System.out.println("DB poblada con éxito");
-    // OPERACIONES
+    // OPERACIONES DEL USUARIO
     int LU = 111111; //libreta universitaria
     // a) Dar de alta un estudiante
     Estudiante e = new Estudiante();
@@ -64,16 +60,19 @@ public class Main {
     // c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
     System.out.println("LISTA TOTAL DE ESTUDIANTES");
 
-    ArrayList<EstudianteDTO> ejercicioC = estudianteRepository.findAll();
-    System.out.println(ejercicioC);
+    ArrayList<EstudianteDTO> todosLosEstudiantes = estudianteRepository.findAll();
+    System.out.println(todosLosEstudiantes);
 
     // d) recuperar un estudiante, en base a su número de libreta universitaria.
     System.out.println("ESTUDIANTE POR LIBRETA");
+
+    System.out.println(estudianteRepository.buscarPorLibretaUnivertitaria(LU));
 
     // EstudianteDTO recuperado = estudianteRepository.buscarPorLibretaUnivertitaria(
     //   LU
     // );
     // System.out.println("Estudiante recuperado por su libreta: " + recuperado);
+
     // e) recuperar todos los estudiantes, en base a su género.
 
     System.out.println("LISTA DE ESTUDIANTES POR GENERO");

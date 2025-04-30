@@ -177,7 +177,7 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
   // recuperar un estudiante, en base a su número de libreta universitaria.
   public EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta) {
     Estudiante estudiante = null;
-    try (em) {
+    try {
       String jpql = "SELECT e from Estudiante e WHERE e.libreta = :libreta";
       em.getTransaction().begin();
       estudiante =
@@ -189,11 +189,7 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
     } catch (Exception e) {
       System.out.println("Error al recuperar un estudiante: " + e.getMessage());
     }
-    if (estudiante == null) {
-      return new EstudianteDTO(null);
-    }
-    EstudianteDTO vista = new EstudianteDTO(estudiante);
-    return vista;
+    return new EstudianteDTO(estudiante);
   }
 
   @Override
