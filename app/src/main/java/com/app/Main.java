@@ -15,7 +15,9 @@ public class Main {
     System.out.println("*******************************************");
 
     // INICIO DE LA APLICACION
+    System.out.println("*******************************************");
     System.out.println("Iniciando la aplicacion");
+    System.out.println("*******************************************");
     // POBLANDO LA BASE DE DATOS tp2-integrador
     System.out.println("Poblando la base de datos");
     System.out.println("*******************************************");
@@ -35,6 +37,16 @@ public class Main {
     System.out.println("*******************************************");
 
     System.out.println("DB poblada con éxito");
+
+    System.out.println("*******************************************");
+    System.out.println("*******************************************");
+
+    System.out.println("OPERACIONES DEL USUARIO");
+
+    System.out.println("*******************************************");
+    System.out.println("*******************************************");
+
+    System.out.println("DAR DE ALTA DOS ESTUDIANTES");
 
     System.out.println("*******************************************");
     // OPERACIONES DEL USUARIO
@@ -61,15 +73,27 @@ public class Main {
     e1.setLibreta(222222);
     estudianteRepository.save(e1);
 
+    System.out.println("*******************************************");
+
+    System.out.println("MATRICULARLOS EN LA CARRERA TUDAI");
+
+    System.out.println("*******************************************");
     // b) Matricular un estudiante en una carrera
     inscripcionRepository.matricularEstudiante(e1.getId_estudiante(), 1);
     inscripcionRepository.matricularEstudiante(e.getId_estudiante(), 1);
+
+    System.out.println("*******************************************");
+
+    System.out.println("CONSULTAS");
+
+    System.out.println("*******************************************");
 
     // c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
 
     ArrayList<EstudianteDTO> todosLosEstudiantes = estudianteRepository.findAll();
     System.out.println("*******************************************");
     System.out.println("LISTA TOTAL DE ESTUDIANTES");
+    System.out.println("*******************************************");
 
     System.out.println(todosLosEstudiantes);
 
@@ -77,6 +101,7 @@ public class Main {
 
     System.out.println("*******************************************");
     System.out.println("ESTUDIANTE POR LIBRETA");
+    System.out.println("*******************************************");
 
     System.out.println(estudianteRepository.buscarPorLibretaUnivertitaria(LU));
 
@@ -84,6 +109,7 @@ public class Main {
 
     System.out.println("*******************************************");
     System.out.println("LISTA DE ESTUDIANTES POR GENERO");
+    System.out.println("*******************************************");
 
     ArrayList<EstudianteDTO> estudiantesPorGenero = estudianteRepository.findAllByGender(
       "Masculino"
@@ -95,6 +121,7 @@ public class Main {
     ArrayList<CarreraConInscriptosDTO> listaCarreras = carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos();
     System.out.println("*******************************************");
     System.out.println("LISTA DE CARRERAS CON INSCRIPTOS");
+    System.out.println("*******************************************");
 
     System.out.println(listaCarreras);
 
@@ -106,6 +133,8 @@ public class Main {
     );
     System.out.println("*******************************************");
     System.out.println("LISTA DE ESTUDIANTES POR CARRERA Y CIUDAD");
+    System.out.println("*******************************************");
+
     System.out.println(listaEstudiantes);
   }
 }
