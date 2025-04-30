@@ -12,10 +12,14 @@ import java.util.ArrayList;
 public class Main {
 
   public static void main(String[] args) {
+    System.out.println("*******************************************");
+
     // INICIO DE LA APLICACION
     System.out.println("Iniciando la aplicacion");
     // POBLANDO LA BASE DE DATOS tp2-integrador
     System.out.println("Poblando la base de datos");
+    System.out.println("*******************************************");
+
     CarreraRepository carreraRepository = new CarreraRepository();
     carreraRepository.insertarCarreraDeCSV(
       "src/main/resources/populateDB/carreras.csv"
@@ -28,7 +32,11 @@ public class Main {
     inscripcionRepository.insertarDesdeCSV(
       "src/main/resources/populateDB/estudianteCarrera.csv"
     );
+    System.out.println("*******************************************");
+
     System.out.println("DB poblada con éxito");
+
+    System.out.println("*******************************************");
     // OPERACIONES DEL USUARIO
     int LU = 111111; //libreta universitaria
     // a) Dar de alta un estudiante
@@ -58,38 +66,37 @@ public class Main {
     inscripcionRepository.matricularEstudiante(e.getId_estudiante(), 1);
 
     // c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-    System.out.println("LISTA TOTAL DE ESTUDIANTES");
 
     ArrayList<EstudianteDTO> todosLosEstudiantes = estudianteRepository.findAll();
+    System.out.println("*******************************************");
+    System.out.println("LISTA TOTAL DE ESTUDIANTES");
+
     System.out.println(todosLosEstudiantes);
 
     // d) recuperar un estudiante, en base a su número de libreta universitaria.
+
+    System.out.println("*******************************************");
     System.out.println("ESTUDIANTE POR LIBRETA");
 
     System.out.println(estudianteRepository.buscarPorLibretaUnivertitaria(LU));
 
-    // EstudianteDTO recuperado = estudianteRepository.buscarPorLibretaUnivertitaria(
-    //   LU
-    // );
-    // System.out.println("Estudiante recuperado por su libreta: " + recuperado);
-
     // e) recuperar todos los estudiantes, en base a su género.
 
+    System.out.println("*******************************************");
     System.out.println("LISTA DE ESTUDIANTES POR GENERO");
 
-    // for (EstudianteDTO dto : estudianteRepository.findAllByGender(
-    //   "Masculino"
-    // )) {
-    //   System.out.println(dto);
-    // }
+    ArrayList<EstudianteDTO> estudiantesPorGenero = estudianteRepository.findAllByGender(
+      "Masculino"
+    );
+    System.out.println(estudiantesPorGenero);
+
     // f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
-    System.out.println("LISTA DE CARRERAS CON INSCRIPTOS");
 
     ArrayList<CarreraConInscriptosDTO> listaCarreras = carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos();
+    System.out.println("*******************************************");
+    System.out.println("LISTA DE CARRERAS CON INSCRIPTOS");
+
     System.out.println(listaCarreras);
-    // for (CarreraConInscriptosDTO inscriptos : carreraRepository.buscarTodasLasCarrerasConEstudiantesInscriptos()) {
-    //   System.out.println(inscriptos);
-    // }
 
     // g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
 
@@ -97,6 +104,7 @@ public class Main {
       "TUDAI",
       "Necochea"
     );
+    System.out.println("*******************************************");
     System.out.println("LISTA DE ESTUDIANTES POR CARRERA Y CIUDAD");
     System.out.println(listaEstudiantes);
   }

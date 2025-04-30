@@ -194,8 +194,8 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
 
   @Override
   // recuperar todos los estudiantes, en base a su género.
-  public List<EstudianteDTO> findAllByGender(String genero) {
-    List<EstudianteDTO> resultado = new ArrayList<>();
+  public ArrayList<EstudianteDTO> findAllByGender(String genero) {
+    ArrayList<EstudianteDTO> resultado = new ArrayList<>();
     try {
       List<Estudiante> listaEstudiantes;
       String jpql =
