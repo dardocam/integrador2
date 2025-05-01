@@ -2,6 +2,7 @@ package com.app.repository.interfaces;
 
 import com.app.dto.CarreraConInscriptosDTO;
 import com.app.dto.CarreraDTO;
+import com.app.dto.CarreraReporteDTO;
 import com.app.model.Carrera;
 import java.util.ArrayList;
 
@@ -17,4 +18,6 @@ public interface CarreraRepositoryInterface {
   void insertarCarreraDeCSV(String rutaArchivoCSV);
 
   ArrayList<CarreraConInscriptosDTO> buscarTodasLasCarrerasConEstudiantesInscriptos();
+
+  ArrayList<CarreraReporteDTO> reporteCarreras();
 }

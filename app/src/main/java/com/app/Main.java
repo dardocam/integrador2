@@ -1,8 +1,10 @@
 package com.app;
 
 import com.app.dto.CarreraConInscriptosDTO;
+import com.app.dto.CarreraReporteDTO;
 import com.app.dto.EstudianteCarreraCiudadDTO;
 import com.app.dto.EstudianteDTO;
+import com.app.factory.JPAUtil;
 import com.app.model.Estudiante;
 import com.app.repository.CarreraRepository;
 import com.app.repository.EstudianteRepository;
@@ -136,5 +138,21 @@ public class Main {
     System.out.println("*******************************************");
 
     System.out.println(listaEstudiantes);
+
+    // Punto 3)
+    // Generar un reporte de las carreras, que para cada carrera incluya información de los
+    // inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar
+    // los años de manera cronológica.
+    ArrayList<CarreraReporteDTO> listaCarreraReporte = carreraRepository.reporteCarreras();
+    System.out.println("*******************************************");
+    System.out.println("REPORTE DE CARRERAS");
+    System.out.println("*******************************************");
+
+    System.out.println(listaCarreraReporte);
+
+    System.out.println("*******************************************");
+    System.out.println("FIN DE LA APLICACION - CIERRE DE CONEXION");
+    System.out.println("*******************************************");
+    JPAUtil.close();
   }
 }

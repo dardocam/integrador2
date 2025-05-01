@@ -1,18 +1,19 @@
 package com.app.dto;
 
-import com.app.model.Carrera;
-import com.app.model.Estudiante;
-
 public class EstudianteCarreraCiudadDTO {
 
   private final String nombre;
   private final String carrera;
   private final String ciudad;
 
-  public EstudianteCarreraCiudadDTO(Estudiante e, Carrera c) {
-    this.nombre = e.getNombre();
-    this.carrera = c.getNombre();
-    this.ciudad = e.getCiudad();
+  public EstudianteCarreraCiudadDTO(
+    String nombreEstudiante,
+    String nombreCarrera,
+    String ciudadResidencia
+  ) {
+    this.nombre = nombreEstudiante;
+    this.carrera = nombreCarrera;
+    this.ciudad = ciudadResidencia;
   }
 
   public String getNombre() {

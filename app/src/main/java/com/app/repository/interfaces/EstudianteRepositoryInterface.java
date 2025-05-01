@@ -16,7 +16,6 @@ public interface EstudianteRepositoryInterface {
   List<EstudianteDTO> findAllByGender(String genero);
 
   EstudianteDTO buscarPorLibretaUnivertitaria(int numeroLibreta);
-
   ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad(
     String nombreCarrera,
     String ciudadResidencia

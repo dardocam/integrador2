@@ -2,6 +2,7 @@ package com.app.repository;
 
 import com.app.dto.CarreraConInscriptosDTO;
 import com.app.dto.CarreraDTO;
+import com.app.dto.CarreraReporteDTO;
 import com.app.factory.JPAUtil;
 import com.app.model.Carrera;
 import com.app.repository.interfaces.CarreraRepositoryInterface;
@@ -180,5 +181,38 @@ public class CarreraRepository implements CarreraRepositoryInterface {
       }
     }
     return carrerasConEstudiantes;
+  }
+
+  //Generar un reporte de las carreras, que para cada carrera incluya información de los
+  //inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar
+  //los años de manera cronológica.
+  @Override
+  public ArrayList<CarreraReporteDTO> reporteCarreras() {
+    ArrayList<CarreraReporteDTO> estudiantes = new ArrayList<>();
+    try {
+      String query =
+        "SELECT new CarreraReporteDTO(c.nombre, i.inscripcion, COUNT(i),SUM(CASE WHEN i.graduacion > 0 THEN 1 ELSE 0 END) ) " +
+        "FROM Carrera c " +
+        "JOIN c.inscripcion i " + //// Asume que la entidad Carrera tiene una colección "inscriptos" de tipo Inscriptos
+        "GROUP BY " +
+        "c.nombre, i.inscripcion " +
+        "ORDER BY c.nombre ASC, i.inscripcion ASC";
+
+      em.getTransaction().begin();
+      List<CarreraReporteDTO> resultados = em
+        .createQuery(query, CarreraReporteDTO.class)
+        .getResultList();
+
+      for (CarreraReporteDTO resultado : resultados) {
+        estudiantes.add(resultado);
+      }
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      System.out.println("Error general: " + e.getMessage());
+      if (em.getTransaction().isActive()) {
+        em.getTransaction().rollback();
+      }
+    }
+    return estudiantes;
   }
 }

@@ -223,7 +223,6 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
     return resultado;
   }
 
-  //recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
   @Override
   public ArrayList<EstudianteCarreraCiudadDTO> buscarEstudianteCarreraCiudad(
     String nombreCarrera,
@@ -232,7 +231,7 @@ public class EstudianteRepository implements EstudianteRepositoryInterface {
     ArrayList<EstudianteCarreraCiudadDTO> estudiantes = new ArrayList<>();
     try {
       String query =
-        "SELECT new EstudianteCarreraCiudadDTO(e,c) " +
+        "SELECT new EstudianteCarreraCiudadDTO(e.nombre,c.nombre,e.ciudad) " +
         "FROM Estudiante e " +
         "JOIN e.inscripcion i " + //// Asume que la entidad Estudiante tiene una colección "inscriptos" de tipo Inscriptos
         "JOIN i.carrera c " + //// Asume que la entidad Inscripcion tiene una referencia a Carrera

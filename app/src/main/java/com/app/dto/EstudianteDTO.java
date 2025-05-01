@@ -24,11 +24,13 @@ public class EstudianteDTO {
       "EstudianteDTO{" +
       "nombre='" +
       nombre +
-      '\'' +
+      "' " +
       "libreta=" +
       libreta +
+      ' ' +
       "genero=" +
       genero +
+      ' ' +
       '}'
     );
   }
