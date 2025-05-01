@@ -18,7 +18,7 @@ public class Main {
 
     // INICIO DE LA APLICACION
     System.out.println("*******************************************");
-    System.out.println("Iniciando la aplicacion");
+    System.out.println("START APPLICATION");
     System.out.println("*******************************************");
     // POBLANDO LA BASE DE DATOS tp2-integrador
     System.out.println("Poblando la base de datos");
@@ -151,7 +151,7 @@ public class Main {
     System.out.println(listaCarreraReporte);
 
     System.out.println("*******************************************");
-    System.out.println("FIN DE LA APLICACION - CIERRE DE CONEXION");
+    System.out.println("END APPLICATION - CIERRE DE CONEXION");
     System.out.println("*******************************************");
     JPAUtil.close();
   }
