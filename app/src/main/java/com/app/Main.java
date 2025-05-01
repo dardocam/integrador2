@@ -136,11 +136,5 @@ public class Main {
     System.out.println("*******************************************");
 
     System.out.println(listaEstudiantes);
-
-    System.out.println("*******************************************");
-    System.out.println("REPORTE DE CARRERAS");
-    System.out.println("*******************************************");
-
-    System.out.println(carreraRepository.reporteCarreras());
   }
 }

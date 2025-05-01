@@ -2,7 +2,6 @@ package com.app.repository;
 
 import com.app.dto.CarreraConInscriptosDTO;
 import com.app.dto.CarreraDTO;
-import com.app.dto.CarreraReporteDTO;
 import com.app.factory.JPAUtil;
 import com.app.model.Carrera;
 import com.app.repository.interfaces.CarreraRepositoryInterface;
@@ -181,50 +180,5 @@ public class CarreraRepository implements CarreraRepositoryInterface {
       }
     }
     return carrerasConEstudiantes;
-  }
-
-  // SELECT
-  // c.nombre AS carrera,
-  // i.antiguedad AS año,
-  // COUNT(i) AS totalInscriptos,
-  // SUM(CASE WHEN i.egresado = true THEN 1 ELSE 0 END) AS totalEgresados
-  // FROM
-  // Carrera c
-  // JOIN
-  // c.inscripcion i  // Asume que Carrera tiene una colección "inscriptos" vinculada a la entidad Inscriptos
-  // GROUP BY
-  // c.nombre, i.antiguedad
-  // ORDER BY
-  // c.nombre ASC, i.antiguedad ASC
-
-  public ArrayList<CarreraReporteDTO> reporteCarreras() {
-    ArrayList<CarreraReporteDTO> resultado = new ArrayList<>();
-    try {
-      String query =
-        "SELECT c.nombre AS carrera " +
-        "i.antiguedad AS año," +
-        "  COUNT(i) AS totalInscriptos," +
-        "  SUM(CASE WHEN i.egresado = true THEN 1 ELSE 0 END) AS totalEgresados" +
-        "FROM Carrera c " +
-        "JOIN c.inscripcion i " +
-        "GROUP BY c.nombre, i.antiguedad ";
-      // "ORDER BY c.nombre ASC, i.antiguedad ASC";
-
-      em.getTransaction().begin();
-      List<CarreraReporteDTO> resultados = em
-        .createQuery(query, CarreraReporteDTO.class)
-        .getResultList();
-
-      for (CarreraReporteDTO reporte : resultados) {
-        System.out.println(reporte);
-      }
-      em.getTransaction().commit();
-    } catch (Exception e) {
-      System.out.println("Error al generar el reporte: " + e.getMessage());
-      if (em.getTransaction().isActive()) {
-        em.getTransaction().rollback();
-      }
-    }
-    return resultado;
   }
 }
