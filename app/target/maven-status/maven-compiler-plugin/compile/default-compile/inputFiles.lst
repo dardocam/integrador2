@@ -5,6 +5,7 @@
 /usr/src/app/src/main/java/com/app/dto/EstudianteDTO.java
 /usr/src/app/src/main/java/com/app/model/Carrera.java
 /usr/src/app/src/main/java/com/app/repository/EstudianteRepository.java
+/usr/src/app/src/main/java/com/app/dto/CarreraReporteDTO.java
 /usr/src/app/src/main/java/com/app/factory/JPAUtil.java
 /usr/src/app/src/main/java/com/app/model/Estudiante.java
 /usr/src/app/src/main/java/com/app/repository/interfaces/CarreraRepositoryInterface.java

@@ -13,3 +13,4 @@ com/app/factory/JPAUtil.class
 com/app/dto/EstudianteCarreraCiudadDTO.class
 com/app/repository/interfaces/EstudianteRepositoryInterface.class
 com/app/model/Carrera.class
+com/app/dto/CarreraReporteDTO.class

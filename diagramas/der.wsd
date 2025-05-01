@@ -1,0 +1,38 @@
+@startuml der
+' Archivo: model_erd.wsd
+' Diagrama ER con notación Information Engineering
+
+skinparam linetype ortho
+skinparam entityAttributeIconSize 0
+
+' Definición de entidades con atributos (clave primaria marcada con *)
+entity Estudiante {
+  * DNI : INT
+    nombre : VARCHAR
+    apellido : VARCHAR
+    edad: INT
+    genero : VARCHAR
+    ciudad : VARCHAR
+    libreta : INT
+}
+
+entity Carrera {
+  * id_carrera : INT
+    nombre : VARCHAR
+    duracion : INT
+}
+
+entity Inscripcion {
+  * id_inscripcion : INT
+    antiguedad : INT
+    graduacion : INT
+    inscripcion : INT
+  - fk_dni : INT
+  -  fk_id_carrera : INT
+
+}
+
+' Relaciones con cardinalidades IE:
+Estudiante ||--o{ Inscripcion : "tiene" "1..*"
+Carrera ||--o{ Inscripcion : "ofrece" "1..*"
+@enduml
