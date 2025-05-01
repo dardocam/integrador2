@@ -1,1 +1,3 @@
 # TPN2 INTEGRADOR JPA y CONSULTAS JPQL 
+
+- hola amigos
