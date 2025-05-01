@@ -1,0 +1,42 @@
+@startuml clases
+' Archivo: clases.wsd
+' Diagrama de clases para Entidades JPA: Estudiante, Carrera, Inscripcion
+
+skinparam classAttributeIconSize 0
+
+package Entidades {
+  
+  class Estudiante <<Entity>> {
+    - id_estudiante: int
+    - nombre: String
+    - apellido: String
+    - edad: int
+    - genero: String
+    - ciudad: String
+    - libreta: int
+    - inscripcion: Set<Inscripcion>
+  }
+
+  class Carrera <<Entity>> {
+    - id_carrera: int
+    - nombre: String
+    - duracion: int
+    - inscripcion: Set<Inscripcion>
+  }
+
+  class Inscripcion <<Entity>> {
+    - id_inscripcion: int
+    - antiguedad: int
+    - graduacion: int
+    - inscripcion: int
+    - estudiante: Estudiante
+    - carrera: Carrera
+  }
+
+  ' Relaciones y multiplicidades
+  Estudiante "1" -- "*" Inscripcion : inscribe >
+  Carrera     "1" -- "*" Inscripcion : ofrece >
+  
+
+}
+@enduml
