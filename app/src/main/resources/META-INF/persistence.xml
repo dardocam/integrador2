@@ -4,7 +4,7 @@
 <properties>
 <!--  Propiedades de configuracion de JPA para MySQL /  -->
 <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-<property name="javax.persistence.jdbc.url" value="jdbc:localhost://mysql:3306/tp2-integrador?createDatabaseIfNotExist=true"/>
+<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tp2-integrador?createDatabaseIfNotExist=true"/>
 <property name="javax.persistence.jdbc.user" value="root"/>
 <property name="javax.persistence.jdbc.password" value=""/>
 <!--  Propiedad para la generacion automatica del esquema de base de datos  -->
